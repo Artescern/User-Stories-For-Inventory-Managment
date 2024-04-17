@@ -20,14 +20,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        //Optional<User> optional = userRepository.findById(user.getId());
+        Optional<User> optional = userRepository.findByEmail(user.getEmail());
+        if(optional.isPresent()){
+            return null;
+        }
         user = userRepository.save(user);
         return user;
     }
 
     @Override
     public User getById(Integer id) {
-        return null;
+        Optional<User> userOptional = userRepository.findById(id);
+        User user = userOptional.orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        return user;
     }
 
     @Override
