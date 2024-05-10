@@ -1,38 +1,41 @@
 package com.example.userstories.entity;
 
-import com.example.userstories.enums.Role;
 import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "maintenance")
+@Table(name = "maintenances")
 public class Maintenance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private Item item;
 
     private Date date;
 
-    public Integer getId() {
-        return id;
+    private String description;
+
+//    @OneToMany(mappedBy = "maintenance", cascade = CascadeType.ALL)
+//    private List<Software> software;
+//
+//    public List<Software> getSoftware() {
+//        return software;
+//    }
+//
+//    public void setSoftware(List<Software> software) {
+//        this.software = software;
+//    }
+
+    public String getDescription() {
+        return description;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getDate() {
@@ -43,15 +46,19 @@ public class Maintenance {
         this.date = date;
     }
 
-    public String getDescription() {
-        return description;
+    public Item getItem() {
+        return item;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
-    private String description;
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 }
-

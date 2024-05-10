@@ -12,7 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/maintenances")
 public class MaintenanceController {
-    private MaintenanceService maintenanceService;
+
+    private final MaintenanceService maintenanceService;
 
     @Autowired
     public MaintenanceController(MaintenanceService maintenanceService) {
@@ -25,26 +26,34 @@ public class MaintenanceController {
         return new ResponseEntity<>(maintenances, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Maintenance> create(@RequestBody Maintenance maintenance) {
-        maintenance = maintenanceService.create(maintenance);
-        return new ResponseEntity<>(maintenance, HttpStatus.CREATED);
-    }
-
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Maintenance> getById(@PathVariable("id") Integer id) {
         Maintenance maintenance = maintenanceService.getById(id);
-        return new ResponseEntity<>(maintenance, HttpStatus.OK);
+        if (maintenance != null) {
+            return new ResponseEntity<>(maintenance, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Maintenance> update(@PathVariable("id") Integer id, @RequestBody Maintenance maintenanceDetail){
-        maintenanceDetail = maintenanceService.update(id, maintenanceDetail);
-        return new ResponseEntity<>(maintenanceDetail, HttpStatus.ACCEPTED);
+    @PostMapping
+    public ResponseEntity<Maintenance> create(@RequestBody Maintenance maintenance) {
+        Maintenance createdMaintenance = maintenanceService.create(maintenance);
+        return new ResponseEntity<>(createdMaintenance, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable("id") Integer id){
+    @PutMapping("/{id}")
+    public ResponseEntity<Maintenance> update(@PathVariable("id") Integer id, @RequestBody Maintenance maintenanceDetail) {
+        Maintenance updatedMaintenance = maintenanceService.update(id, maintenanceDetail);
+        if (updatedMaintenance != null) {
+            return new ResponseEntity<>(updatedMaintenance, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Integer id) {
         maintenanceService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

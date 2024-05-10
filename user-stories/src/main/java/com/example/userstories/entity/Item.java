@@ -1,98 +1,46 @@
 package com.example.userstories.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "items")
-public class Item {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private Date purchaseDate;
-    private Date lendingStartDate;
-    private Date lendingEndDate;
-    private String grantIssuer;
-    private String assetNumber;
-    private String serialNumber;
+    private int id;
+
+    private String name;
+
     private String description;
-    private String storageLocation;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<Loan> loans;
+    private Date purchaseDate;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<Maintenance> maintenances;
+    private String grantIssuer;
 
-    public Integer getId() {
+    private int quantity;
+
+    private double price;
+
+
+    public void updateQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Date getPurchaseDate() {
-        return purchaseDate;
+    public String getName() {
+        return name;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public Date getLendingStartDate() {
-        return lendingStartDate;
-    }
-
-    public void setLendingStartDate(Date lendingStartDate) {
-        this.lendingStartDate = lendingStartDate;
-    }
-
-    public Date getLendingEndDate() {
-        return lendingEndDate;
-    }
-
-    public void setLendingEndDate(Date lendingEndDate) {
-        this.lendingEndDate = lendingEndDate;
-    }
-
-    public String getGrantIssuer() {
-        return grantIssuer;
-    }
-
-    public void setGrantIssuer(String grantIssuer) {
-        this.grantIssuer = grantIssuer;
-    }
-
-    public String getAssetNumber() {
-        return assetNumber;
-    }
-
-    public void setAssetNumber(String assetNumber) {
-        this.assetNumber = assetNumber;
-    }
-
-    public String getSerialNumber() {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -103,11 +51,35 @@ public class Item {
         this.description = description;
     }
 
-    public String getStorageLocation() {
-        return storageLocation;
+    public Date getPurchaseDate() {
+        return purchaseDate;
     }
 
-    public void setStorageLocation(String storageLocation) {
-        this.storageLocation = storageLocation;
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public String getGrantIssuer() {
+        return grantIssuer;
+    }
+
+    public void setGrantIssuer(String grantIssuer) {
+        this.grantIssuer = grantIssuer;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

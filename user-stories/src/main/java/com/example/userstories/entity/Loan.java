@@ -1,30 +1,42 @@
 package com.example.userstories.entity;
 
-import com.example.userstories.enums.Role;
 import jakarta.persistence.*;
-
 import java.util.Date;
-import java.util.List;
+
 @Entity
-@Table(name = "loan")
+@Table(name = "loans")
 public class Loan {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
-    @Column(name = "start_date")
+
     private Date startDate;
-    @Column(name = "end_date")
+
     private Date endDate;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Item getItem() {
@@ -50,6 +62,5 @@ public class Loan {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
 }
 
