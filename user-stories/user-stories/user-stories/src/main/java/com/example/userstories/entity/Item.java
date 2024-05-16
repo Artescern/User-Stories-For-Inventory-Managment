@@ -1,5 +1,6 @@
 package com.example.userstories.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -21,6 +22,7 @@ public abstract class Item {
     private int quantity;
 
     private double price;
+
 
     public void updateQuantity(int quantity) {
         this.quantity += quantity;

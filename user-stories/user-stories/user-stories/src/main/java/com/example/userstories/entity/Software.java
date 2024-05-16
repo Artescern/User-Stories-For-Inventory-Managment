@@ -3,14 +3,13 @@ package com.example.userstories.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "softwares")
+@Table(name = "software")
 public class Software {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
-
 
     public String getName() {
         return name;

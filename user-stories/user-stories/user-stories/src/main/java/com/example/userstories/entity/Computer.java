@@ -1,5 +1,6 @@
 package com.example.userstories.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -30,10 +31,10 @@ public class Computer extends Item {
 
     private boolean loaned;
 
-    @OneToMany(mappedBy = "computer")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Loan> loans;
 
-    @OneToMany(mappedBy = "computer")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Maintenance> maintenances;
 
     private String chargedUpdated;

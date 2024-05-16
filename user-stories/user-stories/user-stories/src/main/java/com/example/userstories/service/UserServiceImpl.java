@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -20,14 +20,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        //Optional<User> optional = userRepository.findById(user.getId());
-        user = userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
     @Override
     public User getById(Integer id) {
-        return null;
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElse(null);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
     }
 
     @Override
@@ -50,10 +54,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public User updateEmail(Integer id, String newEmail) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setEmail(newEmail);
+            return userRepository.save(user);
+        } else {
+            throw new EntityNotFoundException("User not found with id: " + id);
+        }
+    }
 
     @Override
     public void delete(Integer id) {
-        User user = getById(id);
-        userRepository.delete(user);
+        userRepository.deleteById(id);
     }
 }

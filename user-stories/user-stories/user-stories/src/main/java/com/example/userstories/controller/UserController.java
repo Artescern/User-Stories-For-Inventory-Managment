@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/users")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -49,4 +50,15 @@ public class UserController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> getByEmail(@PathVariable("email") String email) {
+        User user = userService.getByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}/email")
+    public ResponseEntity<User> updateEmail(@PathVariable("id") Integer id, @RequestParam("email") String newEmail){
+        User user = userService.updateEmail(id, newEmail);
+        return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+    }
 }

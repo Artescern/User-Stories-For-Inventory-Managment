@@ -1,7 +1,6 @@
 package com.example.userstories.entity;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private Item item;
 
@@ -20,16 +19,16 @@ public class Maintenance {
 
     private String description;
 
-    @OneToMany(mappedBy = "maintenance")
-    private List<Software> software;
-
-    public List<Software> getSoftware() {
-        return software;
-    }
-
-    public void setSoftware(List<Software> software) {
-        this.software = software;
-    }
+//    @OneToMany(mappedBy = "maintenance", cascade = CascadeType.ALL)
+//    private List<Software> software;
+//
+//    public List<Software> getSoftware() {
+//        return software;
+//    }
+//
+//    public void setSoftware(List<Software> software) {
+//        this.software = software;
+//    }
 
     public String getDescription() {
         return description;
@@ -63,4 +62,3 @@ public class Maintenance {
         this.id = id;
     }
 }
-
