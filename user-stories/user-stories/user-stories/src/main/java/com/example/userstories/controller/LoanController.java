@@ -49,4 +49,10 @@ public class LoanController {
         loanService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("/appendLoan/{id}")
+    public ResponseEntity updateLoans(@PathVariable("id") java.lang.Integer id, @RequestBody Loan loan) {
+        loanService.createAndAssign(id, loan);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
 }

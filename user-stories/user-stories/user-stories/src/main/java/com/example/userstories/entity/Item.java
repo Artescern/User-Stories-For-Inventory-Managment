@@ -2,11 +2,15 @@ package com.example.userstories.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Item {
+@DiscriminatorColumn(name = "item_type")
+
+public abstract class Item  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -1,7 +1,9 @@
 package com.example.userstories.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.Date;
+
 
 @Entity
 @Table(name = "loans")
@@ -11,17 +13,19 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @JoinColumn(name = "computer_id")
+    @JsonBackReference
+    private Computer computer;
 
     private Date startDate;
 
     private Date endDate;
+
+
 
     public int getId() {
         return id;
@@ -31,20 +35,20 @@ public class Loan {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Item getItem() {
-        return item;
+    public Item getComputer() {
+        return computer;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setComputer(Computer computer) {
+        this.computer = computer;
     }
 
     public Date getStartDate() {

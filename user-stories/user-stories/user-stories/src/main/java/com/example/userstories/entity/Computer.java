@@ -1,13 +1,16 @@
 package com.example.userstories.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "computers")
+@DiscriminatorValue("COMPUTER")
 public class Computer extends Item {
     private String assetTag;
 
@@ -31,11 +34,18 @@ public class Computer extends Item {
 
     private boolean loaned;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<Loan> loans;
+    @OneToMany(mappedBy = "computer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Loan> loans = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<Maintenance> maintenances;
+
+    public void appendLoan(Loan loan) {
+        this.loans.add(loan);
+        loan.setComputer(this);
+
+    }
 
     private String chargedUpdated;
 

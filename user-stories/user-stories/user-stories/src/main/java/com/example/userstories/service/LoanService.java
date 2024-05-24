@@ -9,4 +9,5 @@ public interface LoanService {
     List<Loan> getAll();
     Loan update(Integer id, Loan loanDetail);
     void delete(Integer id);
+    Loan createAndAssign(int computer_id, Loan loan);
 }
