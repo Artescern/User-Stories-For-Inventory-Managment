@@ -1,7 +1,9 @@
 package com.example.userstories.controller;
 
+import com.example.userstories.entity.Loan;
 import com.example.userstories.entity.Maintenance;
 import com.example.userstories.service.MaintenanceService;
+import com.sun.tools.javac.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +59,11 @@ public class MaintenanceController {
     public ResponseEntity delete(@PathVariable("id") Integer id) {
         maintenanceService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/appendMaintenance/{id}")
+    public ResponseEntity updateMaintenances(@PathVariable("id") java.lang.Integer id, @RequestBody Maintenance maintenance) {
+        maintenanceService.createAndAssign(id, maintenance);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 }

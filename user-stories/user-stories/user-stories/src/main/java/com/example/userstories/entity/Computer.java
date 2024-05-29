@@ -38,14 +38,10 @@ public class Computer extends Item {
     @JsonManagedReference
     private List<Loan> loans = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
-    private List<Maintenance> maintenances;
+    @OneToMany(mappedBy = "computer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Maintenance> maintenances = new ArrayList<>();
 
-    public void appendLoan(Loan loan) {
-        this.loans.add(loan);
-        loan.setComputer(this);
-
-    }
 
     private String chargedUpdated;
 

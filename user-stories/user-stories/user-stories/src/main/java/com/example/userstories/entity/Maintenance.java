@@ -1,5 +1,6 @@
 package com.example.userstories.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +12,10 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @ManyToOne
+    @JoinColumn(name = "computer_id")
+    @JsonBackReference
+    private Computer computer;
 
     private Date date;
 
@@ -46,12 +48,12 @@ public class Maintenance {
         this.date = date;
     }
 
-    public Item getItem() {
-        return item;
+    public Computer getComputer() {
+        return computer;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setComputer(Computer computer) {
+        this.computer = computer;
     }
 
     public int getId() {
