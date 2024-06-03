@@ -1,5 +1,6 @@
 package com.example.userstories.service;
 
+import com.example.userstories.entity.Computer;
 import com.example.userstories.entity.Student;
 import com.example.userstories.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +47,33 @@ public class StudentServiceImpl implements StudentService {
     public void delete(Integer id) {
         studentRepository.deleteById(id);
     }
+
+
+    @Override
+    public void appendNote(Integer id, String note) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        student.getNotes().add(note);
+
+        studentRepository.save(student);
+    }
+    @Override
+    public void deleteNote(Integer id, int noteIndex) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        try {
+            List<String> notes = student.getNotes();
+            System.out.println(notes);
+            notes.remove(noteIndex);
+            System.out.println(notes);
+            student.setNotes(notes);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+        studentRepository.save(student);
+    }
+
 }

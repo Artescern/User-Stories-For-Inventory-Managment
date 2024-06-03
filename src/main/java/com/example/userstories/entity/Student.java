@@ -1,6 +1,10 @@
 package com.example.userstories.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "students")
@@ -15,8 +19,7 @@ public class Student {
 
     private String location;
 
-    @Column(length = 20)
-    private String notes;
+    private List<String> notes = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -50,11 +53,11 @@ public class Student {
         this.location = location;
     }
 
-    public String getNotes() {
+    public List<String> getNotes() {
         return notes;
     }
 
-    public void setNotes(String notes) {
+    public void setNotes(List<String> notes) {
         this.notes = notes;
     }
 

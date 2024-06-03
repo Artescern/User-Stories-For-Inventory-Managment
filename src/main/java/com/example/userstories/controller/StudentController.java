@@ -57,4 +57,16 @@ public class StudentController {
         studentService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("appendNote/{id}")
+    public ResponseEntity appendNote(@PathVariable("id") Integer id, @RequestBody String note) {
+        studentService.appendNote(id, note);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("deleteNote/{id}/{noteIndex}")
+    public ResponseEntity deleteNote(@PathVariable("id") Integer id, @PathVariable("noteIndex") int noteIndex) {
+        studentService.deleteNote(id, noteIndex);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
 }

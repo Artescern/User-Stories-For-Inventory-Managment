@@ -9,4 +9,8 @@ public interface StudentService {
     List<Student> getAll();
     Student update(Integer id, Student studentDetail);
     void delete(Integer id);
+
+    void appendNote(Integer id, String note);
+
+    void deleteNote(Integer id, int noteIndex);
 }
